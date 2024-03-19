@@ -27,6 +27,8 @@ class CalculateScreen extends StatelessWidget {
   final heightController = TextEditingController();
   final weightController = TextEditingController();
 
+  CalculateScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -69,6 +71,7 @@ class CalculateScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // flutter
                     SizedBox(width: 16),
                     Expanded(
                       child: Container(
