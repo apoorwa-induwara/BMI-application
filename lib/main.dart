@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'BMI Calculator',
+      debugShowCheckedModeBanner: false, // Remove debug label from AppBar
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -27,8 +28,6 @@ class CalculateScreen extends StatelessWidget {
   final heightController = TextEditingController();
   final weightController = TextEditingController();
 
-  CalculateScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -40,15 +39,16 @@ class CalculateScreen extends StatelessWidget {
         width: screenWidth,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black), // Add border decoration
-          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('BMI Calculator'),
-            backgroundColor: Color(0xFFE53935), // Set app bar color to #E53935
-            centerTitle: true, // Center the title
+            title: const Text('BMI Calculator'),
+            backgroundColor: const Color(0xFFE53935),
+            centerTitle: true,
+            toolbarHeight: 25,
           ),
-          backgroundColor: Colors.white, // Set background color to white
+          backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -58,7 +58,7 @@ class CalculateScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -67,15 +67,15 @@ class CalculateScreen extends StatelessWidget {
                         child: TextField(
                           controller: heightController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(labelText: 'Height (cm)'),
+                          decoration:
+                              const InputDecoration(labelText: 'Height (cm)'),
                         ),
                       ),
                     ),
-                    // flutter
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -84,13 +84,14 @@ class CalculateScreen extends StatelessWidget {
                         child: TextField(
                           controller: weightController,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(labelText: 'Weight (kg)'),
+                          decoration:
+                              const InputDecoration(labelText: 'Weight (kg)'),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     double height = double.tryParse(heightController.text) ?? 0;
@@ -98,7 +99,11 @@ class CalculateScreen extends StatelessWidget {
                     double bmi = weight / ((height / 100) * (height / 100));
                     Get.toNamed('/info', arguments: bmi);
                   },
-                  child: Text('Calculate'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.red), // Set button background color to red
+                  ),
+                  child: const Text('Calculate'),
                 ),
               ],
             ),
@@ -124,29 +129,30 @@ class InfoScreen extends StatelessWidget {
         width: screenWidth,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black), // Add border decoration
-          borderRadius: BorderRadius.circular(20), // Rounded corners
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('BMI Information'),
-            backgroundColor: Color(0xFFE53935), // Set app bar color to #E53935
-            centerTitle: true, // Center the title
+            title: const Text('BMI Information'),
+            backgroundColor: const Color(0xFFE53935),
+            centerTitle: true,
+            toolbarHeight: 25,
           ),
-          backgroundColor: Colors.white, // Set background color to white
+          backgroundColor: Colors.white,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Your BMI: ${bmi.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text(
                   'Category: $category',
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 BMIWidget(bmi: bmi),
               ],
             ),
